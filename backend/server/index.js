@@ -4,17 +4,18 @@ const cors = require('cors')
 require('dotenv').config()
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
+const path = require('path');
 const axios = require('axios')
 
-const adapter = new FileSync('../db/db.json')
+
+const adapter = new FileSync(path.join(__dirname,'..','/db/db.json'))
 const db = low(adapter)
 
 db.defaults({pictures:[],picturesData:[]}).write()
 
 const app = express()
-const port = process.env.PORT
-const pictures_api = process.env.PICTURES_API
-
+const port = 5000
+const pictures_api ="https://picsum.photos/v2/list?limit=100"
 app.use(cors())
 
 app.get('/getPictures', async(req, res) => {
